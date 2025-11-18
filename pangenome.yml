@@ -1,0 +1,42 @@
+id: pangenome_variant_call
+description: Benchmark variant callers on pangenome versus linear genome
+version: 0.1
+benchmarker: "Monica Aguila i Sans, Jakob Nybo Andersen, Emilie Sofie Engdal"
+benchmark_yaml_spec: 0.04
+software_backend: conda
+software_environments:
+    sawfish:
+        description: "Placeholder evaluation environment"
+        conda: "envs/sawfish.yml"
+        envmodule: sawfish
+        apptainer: "/home/monica/longread_graph_benchmarking/sawfish_0.12.10.sif"
+stages:
+  - id: data
+    modules:
+      - id: linear
+        name: "cram files from linear reference"
+        software_environment: "sawfish"
+        repository: 
+          url: "https://github.com/jakobnissen/pangenome_benchmark"
+          commit: data
+        parameters:
+          - values: ["--input_dir", "/home/monica/longread_graph_benchmarking/input"]
+    outputs:
+     - id: data.linear
+       path: "{input}/{stage}/{module}/{dataset}.cram"
+
+  - id: calling
+    modules:
+     - id: sawfish
+       name: "call using sawfish"
+       software_environment: "sawfish"
+       repository:
+         url: "https://github.com/jakobnissen/pangenome_benchmark"
+         commit: sawfish
+    inputs:
+     - entries:
+       - data.linear
+    outputs:
+      id: sawfish.vcf
+      path: "{input}/{stage}/{module}/{dataset}.vcf"
+           
