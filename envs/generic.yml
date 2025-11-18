@@ -22,7 +22,6 @@ dependencies:
   - openssl=3.0.18=hd6dcaed_0
   - pip=25.3=pyhc872135_0
   - pthread-stubs=0.3=h0ce48e5_1
-  - pydantic
   - python=3.13.0=hf623796_100_cp313
   - python_abi=3.13=1_cp313
   - readline=8.3=hc2a1206_0
