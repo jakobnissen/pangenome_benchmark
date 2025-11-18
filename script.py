@@ -22,11 +22,11 @@ def parse_args():
 def main():
     args = parse_args()
 
-    with open("/tmp/args", "w") as file:
-        print(args, file=file)
-
+    # This allows us to use the script for multiple modules
     if args.name == "linear":
-        os.symlink(args.input_dir, args.output_dir)
+        # Just touch the file for now.
+        with open(os.path.join(args.output_dir, f"{args.name}.cram"), "w") as _:
+            pass
     else:
         raise ValueError(args.name)
 

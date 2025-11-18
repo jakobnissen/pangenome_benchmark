@@ -22,7 +22,7 @@ stages:
         name: "cram files from linear reference"
         software_environment: "generic"
         repository: 
-          url: "https://github.com/jakobnissen/pangenome_benchmark"
+          url: "/home/jakni/code/pangenome_benchmark"
           commit: master
         parameters:
           - values: ["--input_dir", "input"]
@@ -36,7 +36,7 @@ stages:
        name: "call using sawfish"
        software_environment: "sawfish"
        repository:
-         url: "https://github.com/jakobnissen/pangenome_benchmark"
+         url: "/home/jakni/code/pangenome_benchmark"
          commit: master
     inputs:
      - entries:
