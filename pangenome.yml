@@ -3,27 +3,32 @@ description: Benchmark variant callers on pangenome versus linear genome
 version: 0.1
 benchmarker: "Monica Aguila i Sans, Jakob Nybo Andersen, Emilie Sofie Engdal"
 benchmark_yaml_spec: 0.04
-software_backend: conda
+software_backend: host
 software_environments:
+    generic:
+      description: "Default environment"
+      conda: "envs/generic.yml"
+      envmodule: generic
+      
     sawfish:
-        description: "Placeholder evaluation environment"
-        conda: "envs/sawfish.yml"
-        envmodule: sawfish
-        apptainer: "/home/monica/longread_graph_benchmarking/sawfish_0.12.10.sif"
+      description: "Placeholder evaluation environment"
+      conda: "envs/sawfish.yml"
+      envmodule: sawfish
+      apptainer: "/home/monica/longread_graph_benchmarking/sawfish_0.12.10.sif"
 stages:
   - id: data
     modules:
       - id: linear
         name: "cram files from linear reference"
-        software_environment: "sawfish"
+        software_environment: "generic"
         repository: 
           url: "https://github.com/jakobnissen/pangenome_benchmark"
-          commit: data
+          commit: master
         parameters:
-          - values: ["--input_dir", "/home/monica/longread_graph_benchmarking/input"]
+          - values: ["--input_dir", "input"]
     outputs:
      - id: data.linear
-       path: "{input}/{stage}/{module}/{dataset}.cram"
+       path: "{dataset}.cram"
 
   - id: calling
     modules:
@@ -32,11 +37,11 @@ stages:
        software_environment: "sawfish"
        repository:
          url: "https://github.com/jakobnissen/pangenome_benchmark"
-         commit: sawfish
+         commit: master
     inputs:
      - entries:
        - data.linear
     outputs:
       id: sawfish.vcf
-      path: "{input}/{stage}/{module}/{dataset}.vcf"
+      path: "{dataset}.vcf"
            
